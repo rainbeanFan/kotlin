@@ -11,3 +11,10 @@ public final class Test2</*0*/ W> {
     public final fun test2(): kotlin.Unit
     public open override /*1*/ /*fake_override*/ fun toString(): kotlin.String
 }
+
+package kotlin {
+
+    package kotlin.reflect {
+        public inline fun </*0*/ reified T> typeOf(): kotlin.reflect.KType
+    }
+}
