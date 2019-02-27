@@ -19,7 +19,6 @@ kotlin {
     sourceSets["commonTest"].apply {
         dependencies {
             api("org.jetbrains.kotlin:kotlin-test-annotations-common")
-            api(project(":exported"))
         }
     }
 

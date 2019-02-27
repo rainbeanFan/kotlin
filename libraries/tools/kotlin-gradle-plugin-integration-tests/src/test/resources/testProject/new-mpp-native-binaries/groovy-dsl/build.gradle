@@ -27,7 +27,6 @@ kotlin {
         commonTest {
             dependencies {
                 api "org.jetbrains.kotlin:kotlin-test-annotations-common"
-                api(project(":exported"))
             }
         }
     }
