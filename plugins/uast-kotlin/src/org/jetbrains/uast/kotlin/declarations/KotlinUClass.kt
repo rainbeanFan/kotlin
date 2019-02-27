@@ -89,7 +89,7 @@ class KotlinSupertypeDelegationUExpression(override val sourcePsi: KtDelegatedSu
     }
 
     override val expressions: List<UExpression>
-        get() = listOf(typeReference ?: UastEmptyExpression(this), delegateExpression ?: UastEmptyExpression(this))
+        get() = listOfNotNull(typeReference, delegateExpression)
 
     override val kind: UastSpecialExpressionKind get() = KotlinSpecialExpressionKinds.SUPER_DELEGATION
 
