@@ -32,6 +32,8 @@ import org.jetbrains.kotlin.idea.core.script.settings.KotlinScriptingSettings
 import org.jetbrains.kotlin.idea.highlighter.KotlinHighlightingUtil
 import org.jetbrains.kotlin.idea.navigation.GotoCheck
 import org.jetbrains.kotlin.idea.util.application.runWriteAction
+import org.jetbrains.kotlin.resolve.extensions.ExtraImportsProviderExtension
+import org.jetbrains.kotlin.scripting.compiler.plugin.ScriptExtraImportsProviderExtension
 import org.jetbrains.kotlin.test.InTextDirectivesUtils
 import org.jetbrains.kotlin.test.KotlinTestUtils
 import org.jetbrains.kotlin.test.MockLibraryUtil
@@ -169,6 +171,7 @@ abstract class AbstractScriptConfigurationTest : KotlinCompletionTestCase() {
         val mainScriptFile = findMainScript(path)
         val environment = createScriptEnvironment(mainScriptFile)
         registerScriptTemplateProvider(environment)
+        registerScriptingServices()
 
         File(path, "mainModule").takeIf { it.exists() }?.let {
             myModule = createTestModuleFromDir(it)
@@ -360,5 +363,16 @@ abstract class AbstractScriptConfigurationTest : KotlinCompletionTestCase() {
         ScriptDefinitionsManager.getInstance(project).reloadScriptDefinitions()
 
         UIUtil.dispatchAllInvocationEvents()
+    }
+
+    private fun registerScriptingServices() {
+        ExtraImportsProviderExtension.registerExtensionPoint(project)
+        PlatformTestUtil.registerExtension(
+            Extensions.getArea(project),
+            ExtraImportsProviderExtension.extensionPointName,
+            ScriptExtraImportsProviderExtension(),
+            testRootDisposable
+        )
+
     }
 }
