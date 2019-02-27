@@ -12,11 +12,6 @@ kotlin {
     sourceSets["commonMain"].apply {
         dependencies {
             api("org.jetbrains.kotlin:kotlin-stdlib-common")
-        }
-    }
-
-    sourceSets.create("iosMain").apply {
-        dependencies {
             api(project(":exported"))
         }
     }
@@ -24,6 +19,7 @@ kotlin {
     sourceSets["commonTest"].apply {
         dependencies {
             api("org.jetbrains.kotlin:kotlin-test-annotations-common")
+            api(project(":exported"))
         }
     }
 
