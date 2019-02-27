@@ -1180,11 +1180,9 @@ class NewMultiplatformIT : BaseGradleIT() {
         val externalLibProject = Project("sample-external-lib", gradleVersion, "new-mpp-lib-and-app").apply {
             if (withMetadata) {
                 setupWorkingDir()
-                // Publish it into local repository where of lib:
+                // Publish it into local repository of adjacent lib:
                 gradleBuildScript().appendText(
                     "\n" + """
-                    group = "com.external.dependency"
-                    version = "1.2.3"
                     publishing {
                         repositories {
                             maven { url "file://${'$'}{rootProject.projectDir.absolutePath.replace('\\', '/')}/../sample-lib/repo" }
@@ -1194,7 +1192,6 @@ class NewMultiplatformIT : BaseGradleIT() {
                 )
                 build("publish") {
                     assertSuccessful()
-                    gradleBuildScript().appendText("\ngroup = 'com.example'; version = '1.0'")
                 }
             }
         }
